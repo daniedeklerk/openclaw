@@ -3,6 +3,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        OPENCLAW_EXTENSIONS: "codex"
     pull_policy: build
     restart: unless-stopped
 
