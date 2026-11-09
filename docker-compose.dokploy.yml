@@ -25,17 +25,9 @@ services:
     security_opt:
       - no-new-privileges:true
 
-    command:
-      - node
-      - dist/index.js
-      - gateway
-      - --bind
-      - "${OPENCLAW_GATEWAY_BIND:-loopback}"
-      - --auth
-      - token
-      - --port
-      - "18789"
-      - --allow-unconfigured
+    command: ["sleep", "infinity"]
+    healthcheck:
+      disable: true
 
 volumes:
   openclaw-data:
