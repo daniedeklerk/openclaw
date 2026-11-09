@@ -27,9 +27,16 @@ services:
     security_opt:
       - no-new-privileges:true
 
-    command: ["sleep", "infinity"]
-    healthcheck:
-      disable: true
+    command:
+      - node
+      - dist/index.js
+      - gateway
+      - --bind
+      - lan
+      - --auth
+      - token
+      - --port
+      - "18789"
 
 volumes:
   openclaw-data:
