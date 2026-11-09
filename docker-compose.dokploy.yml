@@ -1,0 +1,42 @@
+services:
+  openclaw-gateway:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    pull_policy: build
+    restart: unless-stopped
+
+    environment:
+      HOME: /home/node
+      OPENCLAW_HOME: /home/node
+      OPENCLAW_GATEWAY_TOKEN: ${OPENCLAW_GATEWAY_TOKEN:?Set a gateway token}
+      TZ: Africa/Johannesburg
+
+    volumes:
+      - openclaw-data:/home/node/.openclaw
+      - openclaw-auth:/home/node/.config/openclaw
+
+    expose:
+      - "18789"
+
+    cap_drop:
+      - NET_RAW
+      - NET_ADMIN
+    security_opt:
+      - no-new-privileges:true
+
+    command:
+      - node
+      - dist/index.js
+      - gateway
+      - --bind
+      - "${OPENCLAW_GATEWAY_BIND:-loopback}"
+      - --auth
+      - token
+      - --port
+      - "18789"
+      - --allow-unconfigured
+
+volumes:
+  openclaw-data:
+  openclaw-auth:
